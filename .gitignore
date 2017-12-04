@@ -1,0 +1,8 @@
+# JetBrains folder
+.idea
+
+# node modules folder
+node_modules
+
+# Yarn files
+yarn.lock

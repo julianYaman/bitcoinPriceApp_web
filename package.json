@@ -1,0 +1,21 @@
+{
+  "name": "BitcoinPriceApplication",
+  "version": "1.0.0",
+  "description": "A simple page with Node.js which shows the current price of Bitcoin.",
+  "main": "main.js",
+  "scripts": {
+    "run": "nodemon main.js"
+  },
+  "repository": "https://github.com/julianYaman/bitcoinPriceApplication_web.git",
+  "bugs": {
+    "url": "https://github.com/julianYaman/bitcoinPriceApplication_web/issues"
+  },
+  "author": "Julian Yaman <julianyaman@gmx.de>",
+  "contributors": [],
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.2",
+    "got": "^8.0.1",
+    "nodemon": "^1.12.2"
+  }
+}
