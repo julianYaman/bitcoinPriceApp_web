@@ -48,9 +48,9 @@ exports.roundNumber = (value, precision) => {
 exports.getBitcoinPrice = async () => {
 
   try{
-    let response = await got('https://api.coinmarketcap.com/v1/ticker/Bitcoin/?convert=USD', {timeout: 2000})
+    let response = await got('https://bitpay.com/api/rates/usd', {timeout: 2000})
     let data = JSON.parse(response.body)
-    return this.roundNumber(data[0]['price_usd'], 2) + "$"
+    return data['rate'] + "$"
   }catch (e){
     return "Failed to get the price - request error. Please inform the developer about this issue by writing an issue at the Github repository";
   }
