@@ -14,7 +14,11 @@ const got = require("got")
 // Initiating app
 const app = express()
 
+// Set view engine
 app.set('view engine', 'pug')
+
+// Allow using src folder
+app.use('/src', express.static('src', { redirect : false }));
 
 app.get('/', (req, res) => {
 
@@ -23,7 +27,6 @@ app.get('/', (req, res) => {
   }).catch(e => {
     res.render('index', {title: "Bitcoin Price " + version, price: "Unexpected error: " + e})
   })
-
 })
 
 app.listen("5678", function () {
@@ -50,7 +53,7 @@ exports.getBitcoinPrice = async () => {
   try{
     let response = await got('https://bitpay.com/api/rates/usd', {timeout: 2000})
     let data = JSON.parse(response.body)
-    return data['rate'] + "$"
+    return this.roundNumber(data['rate'], 2) + "$"
   }catch (e){
     return "Failed to get the price - request error. Please inform the developer about this issue by writing an issue at the Github repository";
   }

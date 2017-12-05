@@ -2,7 +2,13 @@ doctype html
 html(lang="en")
     head
         title= title
+        meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
         link(rel="stylesheet" type="text/css" href="src/style.css")
+        link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900")
+        link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous")
     body
-        h2 The current price of 1 BTC is
-        h1(class='bitcoinPrice')= price
+        table#wrapper
+            tr
+                td
+                    h2 The current price of 1 BTC is
+                    h1(class='bitcoinPrice')= price
