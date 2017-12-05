@@ -17,7 +17,13 @@ const app = express()
 app.set('view engine', 'pug')
 
 app.get('/', (req, res) => {
-  res.render('index', {title: "Bitcoin Price " + version, price: this.getBitcoinPrice()})
+
+  this.getBitcoinPrice().then(price => {
+    res.render('index', {title: "Bitcoin Price " + version, price: price})
+  }).catch(e => {
+    res.render('index', {title: "Bitcoin Price " + version, price: "Unexpected error: " + e})
+  })
+
 })
 
 app.listen("5678", function () {
@@ -25,34 +31,28 @@ app.listen("5678", function () {
 });
 
 /**
- * Returns a formatted time string with a millisecond timestamp.
+ * Rounds a given decimal number
  *
- * @param value - The number you want to round.
- * @param precision - Precision of the decimal number.
- * @since masterAfter-1.3
+ * @param {Number} value - The number you want to round.
+ * @param {Number} precision - Precision of the decimal number.
+ * @since 1.0.0
  *
  * @private
  */
 // Thanks Billy Moon for giving the answer how to make a more precise round function: https://stackoverflow.com/a/7343013
-exports.roundNumber = (/** Number */ value, /** Number */ precision) => {
+exports.roundNumber = (value, precision) => {
   let multiplier = Math.pow(10, precision || 0)
   return Math.round(value * multiplier) / multiplier
 }
 
-exports.getBitcoinPrice = () => {
+exports.getBitcoinPrice = async () => {
 
-  let result;
+  try{
+    let response = await got('https://api.coinmarketcap.com/v1/ticker/Bitcoin/?convert=USD', {timeout: 2000})
+    let data = JSON.parse(response.body)
+    return this.roundNumber(data[0]['price_usd'], 2) + "$"
+  }catch (e){
+    return "Failed to get the price - request error. Please inform the developer about this issue by writing an issue at the Github repository";
+  }
 
-  got('https://api.coinmarketcap.com/v1/ticker/Bitcoin/?convert=USD').then(res => {
-    try{
-
-      let priceData = JSON.parse(res.body);
-
-      result = this.roundNumber(priceData[0]['price_usd'], 2)
-    }catch (e){
-      console.error(e)
-    }finally {
-      return result
-    }
-  })
 }
