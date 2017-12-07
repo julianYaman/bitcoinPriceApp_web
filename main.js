@@ -33,7 +33,6 @@ app.get('/', (req, res) => {
 
 app.listen(process.env.PORT, function () {
   console.log('>> App is online and running on port ' + process.env.PORT + '!\n')
-  console.log(process.env)
 });
 
 /**

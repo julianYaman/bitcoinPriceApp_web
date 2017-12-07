@@ -4,7 +4,7 @@
   "description": "A simple page with Node.js which shows the current price of Bitcoin.",
   "main": "main.js",
   "scripts": {
-    "run": "nodemon main.js"
+    "start": "nodemon main.js"
   },
   "repository": "https://github.com/julianYaman/bitcoinPriceApplication_web.git",
   "bugs": {

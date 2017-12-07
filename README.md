@@ -6,12 +6,24 @@
     <a href='https://gemnasium.com/github.com/julianYaman/bitcoinPriceApplication_web'><img src="https://gemnasium.com/badges/github.com/julianYaman/bitcoinPriceApplication_web.svg" alt="Dependency Status" /></a>
 </p>
 
+## Usage:
+Run ```npm start``` to start the project directly.
+
+
+## Description
+
 This is a web application, written in JavaScript and with Node.js, where you can see a simple text with the current price of Bitcoin. 
 
 This project will serve as a template for future projects.
 
+**Note from the developer of the main repository:**
+
 My main purpose for creating this project is to learn more about JavaScript and about Node.js.
 
+## Documentation
 
+**Changing the port:**
+
+Go to the ``.env`` file and change the ``PORT`` variable.
 
 
