@@ -6,3 +6,6 @@ node_modules
 
 # Yarn files
 yarn.lock
+
+# Package Lock
+package-lock.json

@@ -11,6 +11,8 @@ const express = require("express")
 // got Package
 const got = require("got")
 
+require('dotenv').config()
+
 // Initiating app
 const app = express()
 
@@ -29,8 +31,9 @@ app.get('/', (req, res) => {
   })
 })
 
-app.listen("5678", function () {
-  console.log('>> App is online and running on port 5678!\n')
+app.listen(process.env.PORT, function () {
+  console.log('>> App is online and running on port ' + process.env.PORT + '!\n')
+  console.log(process.env)
 });
 
 /**
