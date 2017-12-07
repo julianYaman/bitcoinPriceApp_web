@@ -3,10 +3,11 @@
  *
  */
 
-const version = "1.0.0"
-
 // Express
 const express = require("express")
+
+// HTTPS
+const https = require("https");
 
 // got Package
 const got = require("got")
@@ -24,16 +25,22 @@ app.use('/src', express.static('src', { redirect : false }));
 
 app.get('/', (req, res) => {
 
-  this.getBitcoinPrice().then(price => {
-    res.render('index', {title: "Bitcoin Price " + version, price: price})
-  }).catch(e => {
-    res.render('index', {title: "Bitcoin Price " + version, price: "Unexpected error: " + e})
+  this.getBitcoinPrice((err, data) => {
+
+    if(err){
+      console.error(err);
+      res.render("index", {title: "Bitcoin Price " + process.env.VERSION, price: "Failed to get a price. Please contact the developer!" })
+    }
+
+    res.render("index", {title: "Bitcoin Price " + process.env.VERSION, price: data.price })
+
   })
+
 })
 
 app.listen(process.env.PORT, function () {
   console.log('>> App is online and running on port ' + process.env.PORT + '!\n')
-});
+})
 
 /**
  * Rounds a given decimal number
@@ -50,14 +57,58 @@ exports.roundNumber = (value, precision) => {
   return Math.round(value * multiplier) / multiplier
 }
 
-exports.getBitcoinPrice = async () => {
+// For requesting price with the got module, please add async before the function
+exports.getBitcoinPrice = (callback) => {
 
-  try{
+  // Request with module
+
+  /* try{
     let response = await got('https://bitpay.com/api/rates/usd', {timeout: 2000})
     let data = JSON.parse(response.body)
     return this.roundNumber(data['rate'], 2) + "$"
   }catch (e){
     return "Failed to get the price - request error. Please inform the developer about this issue by writing an issue at the Github repository";
-  }
+  } */
+
+  // Request with native Node.js libraries and code
+
+  https.get('https://bitpay.com/api/rates/usd', (res) => {
+
+    const { statusCode } = res
+
+    let error
+
+    if(statusCode !== 200){
+      error = new Error('Request failed. ' + `Status Code ${statusCode}`)
+    }
+
+    if(error){
+      console.error(error.message)
+      res.resume()
+
+      return
+    }
+
+    let rawData = '';
+
+    res.on('data', (chunk) => { rawData += chunk })
+    res.on('end', () => {
+      try {
+        var parsedData = JSON.parse(rawData)
+      }catch (e){
+        console.error(e.message);
+        return callback(e)
+      }
+
+      callback(null, {
+        price: this.roundNumber(parsedData['rate'], 2) + " $"
+      })
+    })
+
+  }).on('error', (e) => {
+    console.error(`Got error: ${e.message}`)
+    callback(err)
+  })
+
 
 }
