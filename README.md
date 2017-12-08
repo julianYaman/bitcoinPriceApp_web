@@ -2,7 +2,7 @@
 
 <p align="center">
     <a href="https://standardjs.com"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Standard - JavaScript Style Guide"></a>
-    <a href="https://discord.gg/ccpgH3b"><img src="https://img.shields.io/badge/Discord-Join%20Server-7289DA.svg" /></a>
+    <a href="https://discord.gg/ccpgH3b"><img src="https://discordapp.com/api/guilds/358751806697897984/embed.png" /></a>
     <a href='https://gemnasium.com/github.com/julianYaman/bitcoinPriceApplication_web'><img src="https://gemnasium.com/badges/github.com/julianYaman/bitcoinPriceApplication_web.svg" alt="Dependency Status" /></a>
 </p>
 
